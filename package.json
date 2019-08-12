@@ -1,0 +1,18 @@
+{
+  "name": "ShardyMcShardFace",
+  "version": "1.0.0",
+  "description": "Sharding utility for CI services",
+  "main": "dist/index.js",
+  "author": "Joscha Feth",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "@types/lodash.chunk": "^4.2.6",
+    "@types/lodash.shuffle": "^4.2.6",
+    "@types/seedrandom": "^2.4.28",
+    "ci-parallel-vars": "^1.0.0",
+    "lodash.chunk": "^4.2.0",
+    "lodash.shuffle": "^4.2.0",
+    "seedrandom": "^3.0.3"
+  }
+}
