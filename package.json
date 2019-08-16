@@ -1,14 +1,13 @@
 {
-    "name": "ShardyMcShardFace",
-    "version": "1.0.0",
+    "name": "shardy-mc-shard-face",
+    "version": "0.0.0-development",
     "description": "Sharding utility for CI services",
     "main": "dist/index.js",
     "author": "Joscha Feth",
     "license": "MIT",
     "private": false,
     "files": [
-        "dist",
-        "!dist/__tests__"
+        "dist"
     ],
     "devDependencies": {
         "@types/jest": "^24.0.17",

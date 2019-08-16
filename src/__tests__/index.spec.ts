@@ -17,11 +17,15 @@ describe('ShardyMcShardFace', () => {
     describe('functionality', () => {
         let ciParallelVarsMock: CiParallelVarsMock;
 
-        function shards<T>(things: T[], total: number): (readonly T[])[] {
+        function shards<T>(
+            things: T[],
+            total: number,
+            seed = 'test.',
+        ): (readonly T[])[] {
             const ret = [];
             for (let i = 0; i < total; i++) {
                 ciParallelVarsMock.__setIndex(i).__setTotal(total);
-                ret.push(shard(things, 'test.'));
+                ret.push(shard(things, seed));
             }
             return ret;
         }
@@ -40,6 +44,11 @@ describe('ShardyMcShardFace', () => {
 
         it('tail shards empty when there are more slices than items', () => {
             expect(shards([1, 2, 3], 4)).toEqual([[1], [3], [2], []]);
+        });
+
+        it('seed drives shard allocation', () => {
+            expect(shards([1, 2], 2)).toEqual([[2], [1]]);
+            expect(shards([1, 2], 2, 'other.')).toEqual([[1], [2]]);
         });
     });
 });
