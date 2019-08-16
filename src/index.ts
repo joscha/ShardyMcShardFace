@@ -28,7 +28,7 @@ export function shard<T>(
     const shuffled = shuffle([...things], {
         rng: alea(seed),
     });
-    const itemsPerSlice = Math.floor(things.length / slices);
+    const itemsPerSlice = Math.floor(things.length / slices) || 1;
     const start = currentSlice * itemsPerSlice;
     const isLastSlice = currentSlice === slices - 1;
     const end =

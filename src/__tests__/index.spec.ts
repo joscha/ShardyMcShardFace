@@ -16,23 +16,30 @@ describe('ShardyMcShardFace', () => {
 
     describe('functionality', () => {
         let ciParallelVarsMock: CiParallelVarsMock;
+
+        function shards<T>(things: T[], total: number): (readonly T[])[] {
+            const ret = [];
+            for (let i = 0; i < total; i++) {
+                ciParallelVarsMock.__setIndex(i).__setTotal(total);
+                ret.push(shard(things, 'test.'));
+            }
+            return ret;
+        }
         beforeEach(() => {
             jest.mock('ci-parallel-vars');
             ciParallelVarsMock = require('ci-parallel-vars');
         });
 
         it('shards evenly', () => {
-            ciParallelVarsMock.__setIndex(0).__setTotal(2);
-            expect(shard([1, 2, 3, 4], 'test.')).toEqual([4, 1]);
-            ciParallelVarsMock.__setIndex(1).__setTotal(2);
-            expect(shard([1, 2, 3, 4], 'test.')).toEqual([3, 2]);
+            expect(shards([1, 2, 3, 4], 2)).toEqual([[4, 1], [3, 2]]);
         });
 
-        it('shards as evenly as possible', () => {
-            ciParallelVarsMock.__setIndex(1).__setTotal(2);
-            expect(shard([1, 2, 3], 'test.')).toEqual([3, 2]);
-            ciParallelVarsMock.__setIndex(0).__setTotal(2);
-            expect(shard([1, 2, 3], 'test.')).toEqual([1]);
+        it('shards as evenly as possible; leftovers in the tail shard', () => {
+            expect(shards([1, 2, 3], 2)).toEqual([[1], [3, 2]]);
+        });
+
+        it('tail shards empty when there are more slices than items', () => {
+            expect(shards([1, 2, 3], 4)).toEqual([[1], [3], [2], []]);
         });
     });
 });
