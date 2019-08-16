@@ -1,0 +1,19 @@
+{
+    "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "prettier",
+        "prettier/@typescript-eslint"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "overrides": [
+        {
+            "files": ["**/__tests__/**"],
+            "rules": {
+                "@typescript-eslint/explicit-function-return-type": [ "error", { "allowExpressions": true }],
+            }
+        }
+    ]
+}

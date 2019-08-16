@@ -1,18 +1,61 @@
 {
-  "name": "ShardyMcShardFace",
-  "version": "1.0.0",
-  "description": "Sharding utility for CI services",
-  "main": "dist/index.js",
-  "author": "Joscha Feth",
-  "license": "MIT",
-  "private": false,
-  "dependencies": {
-    "@types/lodash.chunk": "^4.2.6",
-    "@types/lodash.shuffle": "^4.2.6",
-    "@types/seedrandom": "^2.4.28",
-    "ci-parallel-vars": "^1.0.0",
-    "lodash.chunk": "^4.2.0",
-    "lodash.shuffle": "^4.2.0",
-    "seedrandom": "^3.0.3"
-  }
+    "name": "ShardyMcShardFace",
+    "version": "1.0.0",
+    "description": "Sharding utility for CI services",
+    "main": "dist/index.js",
+    "author": "Joscha Feth",
+    "license": "MIT",
+    "private": false,
+    "files": [
+        "dist",
+        "!dist/__tests__"
+    ],
+    "devDependencies": {
+        "@types/jest": "^24.0.17",
+        "@types/node": "^12.7.1",
+        "@types/seedrandom": "^2.4.28",
+        "@types/shuffle-array": "^0.0.28",
+        "@typescript-eslint/eslint-plugin": "^2.0.0",
+        "@typescript-eslint/parser": "^2.0.0",
+        "cz-conventional-changelog": "3.0.2",
+        "eslint": "^6.1.0",
+        "eslint-config-prettier": "^6.0.0",
+        "husky": "^3.0.3",
+        "jest": "^24.8.0",
+        "prettier": "^1.18.2",
+        "pretty-quick": "^1.11.1",
+        "rimraf": "^2.7.0",
+        "semantic-release": "^15.13.21",
+        "ts-jest": "^24.0.2",
+        "ts-node": "^8.3.0",
+        "typescript": "^3.5.3"
+    },
+    "dependencies": {
+        "ci-parallel-vars": "^1.0.0",
+        "seedrandom": "^3.0.3",
+        "shuffle-array": "^1.0.1"
+    },
+    "scripts": {
+        "preprepare": "rimraf dist/",
+        "prepare": "tsc",
+        "pretest": "yarn lint",
+        "lint": "eslint --ext .ts src",
+        "test": "jest --ci --coverage",
+        "test:watch": "jest --watch",
+        "semantic-release": "semantic-release"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "pretty-quick --staged"
+        }
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/joscha/ShardyMcShardFace.git"
+    }
 }
