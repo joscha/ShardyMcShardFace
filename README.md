@@ -21,6 +21,8 @@ yarn add shardy-mc-shard-face
 shardyMcShardFace(items: any[] [, seed: string]): shard[];
 ```
 
+You can get debug output by setting the environment variable `DEBUG=ShardyMcShardFace:*`.
+
 ## Example
 
 ```ts
@@ -28,6 +30,25 @@ import { shard as shardyMcShardFace } from 'shardy-mc-shard-face';
 const shard = shardyMcShardFace([1, 2, 3, 4]);
 // shard is an array that contains items based on YOUR_CI_SYSTEM_INDEX and YOUR_CI_SYSTEM_COUNT
 ```
+
+## CLI example
+
+```bash
+cat items | shardy shard
+```
+
+Input is expected to be newline-separated to `stdin`. Output is also newline-separated to `stdout`.
+
+On a CI run this would look like this:
+```bash
+# CI_NODE_INDEX=1 (set by your CI system)
+# CI_NODE_TOTAL=2 (set by your CI system)
+echo "A\nB" | shardy shard
+# Will print "A" (w/o quotes) to stdout
+```
+
+you can control the seed as well via `-s <seed>`.
+For a full list of options, please run `shardy --help`.
 
 ## CI system support
 
