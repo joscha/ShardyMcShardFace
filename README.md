@@ -29,6 +29,22 @@ const shard = shardyMcShardFace([1, 2, 3, 4]);
 // shard is an array that contains items based on YOUR_CI_SYSTEM_INDEX and YOUR_CI_SYSTEM_COUNT
 ```
 
+## CLI example
+
+```bash
+cat items | shardy shard
+```
+
+```bash
+# CI_NODE_INDEX=1
+# CI_NODE_TOTAL=2
+echo "A\nB" | shardy shard
+# Will print "A" (w/o quotes) to stdout
+```
+
+you can control the seed as well via `-s <seed>`.
+For a ful list of options, please run `shardy --help`.
+
 ## CI system support
 
 CI systems supported are the ones supported by [ci-parallel-vars](https://github.com/jamiebuilds/ci-parallel-vars#supports). Feel free to open a pull request there and I will be happy to bump the dependency.
