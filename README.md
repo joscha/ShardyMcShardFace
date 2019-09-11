@@ -18,7 +18,7 @@ yarn add shardy-mc-shard-face
 ## Usage
 
 ```
-shardyMcShardFace(items: any[] [, seed: string]): shard[];
+shardyMcShardFace(items: any[] [, options: { throwOnEmpty: boolean, throwWhenNotSharding: boolean, seed: string }]): shard[];
 ```
 
 You can get debug output by setting the environment variable `DEBUG=ShardyMcShardFace:*`.
@@ -40,6 +40,7 @@ cat items | shardy shard
 Input is expected to be newline-separated to `stdin`. Output is also newline-separated to `stdout`.
 
 On a CI run this would look like this:
+
 ```bash
 # CI_NODE_INDEX=1 (set by your CI system)
 # CI_NODE_TOTAL=2 (set by your CI system)

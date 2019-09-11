@@ -22,7 +22,7 @@ export function processStream(
 
     rs.on('end', () => {
         const lines = things.trim().split(EOL);
-        ws.write(shard(lines, seed).join(EOL));
+        ws.write(shard(lines, { seed }).join(EOL));
     });
 }
 

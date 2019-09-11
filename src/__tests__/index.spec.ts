@@ -7,11 +7,23 @@ describe('ShardyMcShardFace', () => {
         expect(() => shard([])).toThrow(/Nothing to shard/);
     });
 
+    it('does not throw when empty if throwing has been disabled', () => {
+        jest.unmock('ci-parallel-vars');
+        const arr: string[] = [];
+        expect(shard(arr, { throwOnEmpty: false })).toBe(arr);
+    });
+
     it('throws when not in CI context', () => {
         jest.unmock('ci-parallel-vars');
         expect(() => shard([1, 2, 3])).toThrow(
             /Not running in a CI sharding context/,
         );
+    });
+
+    it('does not throw when throwing has been disabled', () => {
+        jest.unmock('ci-parallel-vars');
+        const arr = [1, 2, 3];
+        expect(shard(arr, { throwWhenNotSharding: false })).toBe(arr);
     });
 
     describe('functionality', () => {
@@ -25,7 +37,7 @@ describe('ShardyMcShardFace', () => {
             const ret = [];
             for (let i = 0; i < total; i++) {
                 ciParallelVarsMock.__setIndex(i).__setTotal(total);
-                ret.push(shard(things, seed));
+                ret.push(shard(things, { seed }));
             }
             return ret;
         }
