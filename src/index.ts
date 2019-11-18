@@ -27,6 +27,14 @@ type Options = {
      * If set to false, the sharding function will return identity for the passed array
      */
     throwWhenNotSharding?: boolean;
+
+    /**
+     * The concurrency object.
+     */
+    concurrency?: {
+        index: number;
+        total: number;
+    };
 };
 
 export function shard<T>(
@@ -37,6 +45,10 @@ export function shard<T>(
         seed: defaultSeed,
         throwOnEmpty: true,
         throwWhenNotSharding: true,
+        // we don't import this one, because it statically exposes the vars
+        // and we need to be able to mock them for tests
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        concurrency: require('ci-parallel-vars'),
     };
 
     const options = { ...defaultOptions, ...opts };
@@ -50,11 +62,8 @@ export function shard<T>(
             return things;
         }
     }
-    // we don't import this one, because it statically exposes the vars
-    // and we need to be able to mock them for tests
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const ciParallelVars = require('ci-parallel-vars');
-    if (!ciParallelVars) {
+
+    if (!options.concurrency) {
         if (options.throwWhenNotSharding) {
             throw new NotRunningInShardingContextError(
                 'Not running in a CI sharding context',
@@ -63,7 +72,7 @@ export function shard<T>(
             return things;
         }
     }
-    const { index: currentSlice, total: slices } = ciParallelVars;
+    const { index: currentSlice, total: slices } = options.concurrency;
     info('current slice: %d of %d', currentSlice + 1, slices);
 
     // TODO: we don't need to shuffle the whole array in order to chunk it,
