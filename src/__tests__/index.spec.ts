@@ -2,6 +2,8 @@ import { shard } from '../';
 
 describe('ShardyMcShardFace', () => {
     beforeAll(() => {
+        // We still need this because cli uses the package to get concurrency from the
+        // env and because of the global import we need to unmock it explicitly.
         jest.unmock('ci-parallel-vars');
     });
 
